@@ -4,8 +4,14 @@
 
 Framework fw("Graph");
 
+class Edge { public:
+    int n1, n2, w;  // node 1 node 2 and weight
+    Edge(int n1, int n2, int w) :n1(n1), n2(n2), w(w) {}
+};
+
 class Graph { public:
     vector<V2> nodes;
+    vector<Edge> edges;
 
     void addRandomNodes() {
         for (int i=0; i<100; i++) {
