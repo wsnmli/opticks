@@ -49,10 +49,9 @@ class Graph { public:
             const Edge edge = edges[i];
             const V2 p1 = nodes[edge.n1];
             const V2 p2 = nodes[edge.n2];
-            if (edge.w == 1) { cout << "there is an edge\n";
+            if (edge.w == 1) {
                 fw.set_draw_color(255,255,255);
                 fw.draw_line(p1, p2);
-                cout << p1 << ", " << p2 << "\n";
             }
         }
 
