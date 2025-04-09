@@ -19,6 +19,14 @@ class Graph { public:
         }
     }
 
+    void addEdge(V2 n1, V2 n2, int w) {
+        int numberOfNodes = nodes.size();
+        nodes.push_back(n1);
+        nodes.push_back(n2);
+
+        edges.push_back(Edge(numberOfNodes, numberOfNodes+1, 1));
+    }
+
     void update(Mouse& mouse) {
         static int nSelectedNode = -1;
         if (mouse.leftPressed) {
@@ -47,7 +55,7 @@ class Graph { public:
 int main() {
     Graph graph;
     //graph.addRandomNodes();
-
+    graph.addEdge({100,100}, {200,200}, 1);
     while(true) {
         fw.blank();
         fw.update_input();
