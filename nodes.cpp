@@ -44,9 +44,23 @@ class Graph { public:
     }
 
     void draw() {
+        //  draw edges
+        for (int i=0; i<edges.size(); i++) {
+            const Edge edge = edges[i];
+            const V2 p1 = nodes[edge.n1];
+            const V2 p2 = nodes[edge.n2];
+            if (edge.w == 1) { cout << "there is an edge\n";
+                fw.set_draw_color(255,255,255);
+                fw.draw_line(p1, p2);
+                cout << p1 << ", " << p2 << "\n";
+            }
+        }
+
+        //  draw nodes
         fw.set_draw_color(255,0,0);
         for(int i=0; i<nodes.size(); i++)
             fw.draw_circle(nodes[i], 10);
+
     }
 
 };
