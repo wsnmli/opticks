@@ -19,6 +19,25 @@ class Graph { public:
         }
     }
 
+    double angleOfEdge(int n) {
+        //  find the angle of the nth edge with respect to the x-axis
+
+        //  find the edge
+        const Edge edge = edges[n];
+        //  find the value of p1 and p2
+        V2 p1 = nodes[edge.n1];
+        V2 p2 = nodes[edge.n2];
+
+        if (p1.x == p2.x) return M_PI/2;
+        if (p1.y == p2.y) return 0;
+
+        if (p2.x < p1.x & p2.y < p1.y) swap(p1, p2);
+        else if (p2.x > p1.x & p2.y < p1.y) swap(p1, p2);
+
+        if (p2.x > p1.x & p2.y > p1.y) return atan((p2.y-p1.y)/double(p2.x-p1.x));
+        else return (M_PI /2) - atan((p2.x-p1.x) / double(p2.y-p1.y));
+    }
+
     void addEdge(V2 n1, V2 n2, int w) {
         int numberOfNodes = nodes.size();
         nodes.push_back(n1);
@@ -73,6 +92,7 @@ int main() {
         fw.blank();
         fw.update_input();
 
+        cout << graph.angleOfEdge(0) << "\n" << flush;
         graph.update(fw.mouse);
         graph.draw();
         fw.render();
