@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <utility>
 
 class Vector2i { public:
 	int x, y;
@@ -84,4 +85,9 @@ Vector2i randVector(int x, int y) {
 	tmp.y = rand() % y;
 
 	return tmp;
+}
+
+void swap(Vector2i& v1, Vector2i& v2) {
+    std::swap(v1.x, v2.x);
+    std::swap(v1.y, v2.y);
 }
