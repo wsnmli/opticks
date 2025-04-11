@@ -16,6 +16,12 @@ class Vector2i { public:
 		y += other.y;
 		return *this;
 	}
+
+	Vector2i& operator*=(const int n) {
+		x *= n;
+		y *= n;
+		return *this;
+	}
 };
 
 std::ostream& operator<<(std::ostream& os, const Vector2i &x) {
