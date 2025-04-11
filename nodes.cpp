@@ -46,6 +46,32 @@ class Graph { public:
         edges.push_back(Edge(numberOfNodes, numberOfNodes+1, 1));
     }
 
+    void addSquare(V2 p, int s) {
+        //  where p is the postion and s is its size.
+        //  points for model square
+        V2 p1(-1,-1), p2(1,-1), p3(1,1), p4(-1,1);
+        
+        //  then resize the points
+        p1 *= s;
+        p2 *= s;
+        p3 *= s;
+        p4 *= s;
+
+        p1 += p;
+        p2 += p;
+        p3 += p;
+        p4 += p;
+        
+        int numberOfNodes = nodes.size();
+        nodes.push_back(p1);
+        nodes.push_back(p2);
+        nodes.push_back(p3);
+        nodes.push_back(p4);
+        for (int i=numberOfNodes; i<numberOfNodes+3; i++) {
+            edges.push_back(Edge(i, i+1, 1));
+        } edges.push_back(Edge(numberOfNodes, numberOfNodes+3, 1));
+    }
+
     void update(Mouse& mouse) {
         static int nSelectedNode = -1;
         if (mouse.leftPressed) {
@@ -86,13 +112,14 @@ class Graph { public:
     
 int main() {
     Graph graph;
-    //graph.addRandomNodes();
-    graph.addEdge({100,100}, {200,200}, 1);
+    graph.addSquare({W_WIDTH/2, W_HEIGHT/2}, 100);
+    graph.addSquare({W_WIDTH/2-40, W_HEIGHT/2-100}, 10);
+
     while(true) {
         fw.blank();
         fw.update_input();
 
-        cout << graph.angleOfEdge(0) << "\n" << flush;
+        //cout << graph.angleOfEdge(0) << "\n" << flush;
         graph.update(fw.mouse);
         graph.draw();
         fw.render();
