@@ -187,7 +187,8 @@ public:
                 } break;
 
                 case SDL_KEYUP: {
-                    case SDLK_a: 
+                    switch (event.key.keysym.sym) {
+                        case SDLK_a: 
                             keys.aHeld = false; 
                             break;
                         case SDLK_b: 
@@ -281,6 +282,7 @@ public:
 
                         default: 
                             break;
+                    }
                 } break;
                 case SDL_JOYBUTTONDOWN: {
                     int b = event.cbutton.button;
