@@ -109,11 +109,45 @@ class Graph { public:
 
 };
 
+class Raycaster { public:
+    //  model points
+    V2 m1, m2, m3;
+    V2 c;   // centre of traingle
     
+    V2 p1, p2, p3;
+    double angleX = 0;
+
+    Raycaster(V2 c) :c(c) {
+        m1 = {14, 0};
+        m2 = {-7, 10};
+        m3 = {-7, -10};
+    }
+
+    void draw() {
+        p1 = c + m1;
+        p2 = c + m2;
+        p3 = c + m3;
+
+        fw.set_draw_color(0,0,255);
+        fw.draw_line(p1,p2);
+        fw.draw_line(p2,p3);
+        fw.draw_line(p3,p1);
+    }
+
+    void update(Keyboard& keyboard) {
+        if (keyboard.aHeld) c -= {10, 0};
+        if (keyboard.dHeld) c += {10, 0};
+        if (keyboard.wHeld) c -= {0, 10};
+        if (keyboard.sHeld) c += {0, 10};
+    }
+};
+
 int main() {
     Graph graph;
     graph.addSquare({W_WIDTH/2, W_HEIGHT/2}, 100);
-    graph.addSquare({W_WIDTH/2-40, W_HEIGHT/2-100}, 10);
+    graph.addSquare({W_WIDTH/2-80, W_HEIGHT/2-200}, 50);
+
+    Raycaster raycaster({W_WIDTH/2, W_HEIGHT/2});
 
     while(true) {
         fw.blank();
@@ -122,6 +156,9 @@ int main() {
         //cout << graph.angleOfEdge(0) << "\n" << flush;
         graph.update(fw.mouse);
         graph.draw();
+
+        raycaster.draw();
+        raycaster.update(fw.keys);
         fw.render();
     }
 }
