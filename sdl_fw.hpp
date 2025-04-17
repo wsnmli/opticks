@@ -185,6 +185,103 @@ public:
                             break;
                     }
                 } break;
+
+                case SDL_KEYUP: {
+                    case SDLK_a: 
+                            keys.aHeld = false; 
+                            break;
+                        case SDLK_b: 
+                            keys.bHeld = false; 
+                            break;
+                        case SDLK_c: 
+                            keys.cHeld = false; 
+                            break;
+                        case SDLK_d: 
+                            keys.dHeld = false; 
+                            break;
+                        case SDLK_e: 
+                            keys.eHeld = false; 
+                            break;
+                        case SDLK_f: 
+                            keys.fHeld = false; 
+                            break;
+                        case SDLK_g: 
+                            keys.gHeld = false; 
+                            break;
+                        case SDLK_h: 
+                            keys.hHeld = false; 
+                            break;
+                        case SDLK_i: 
+                            keys.iHeld = false; 
+                            break;
+                        case SDLK_j: 
+                            keys.jHeld = false; 
+                            break;
+                        case SDLK_k: 
+                            keys.kHeld = false; 
+                            break;
+                        case SDLK_l: 
+                            keys.lHeld = false; 
+                            break;
+                        case SDLK_m: 
+                            keys.mHeld = false; 
+                            break;
+                        case SDLK_n: 
+                            keys.nHeld = false; 
+                            break;
+                        case SDLK_o: 
+                            keys.oHeld = false; 
+                            break;
+                        case SDLK_p: 
+                            keys.pHeld = false; 
+                            break;
+                        case SDLK_q: 
+                            keys.qHeld = false; 
+                            break;
+                        case SDLK_r: 
+                            keys.rHeld = false; 
+                            break;
+                        case SDLK_s: 
+                            keys.sHeld = false; 
+                            break;
+                        case SDLK_t: 
+                            keys.tHeld = false; 
+                            break;
+                        case SDLK_u: 
+                            keys.uHeld = false; 
+                            break;
+                        case SDLK_v: 
+                            keys.vHeld = false; 
+                            break;
+                        case SDLK_w: 
+                            keys.wHeld = false; 
+                            break;
+                        case SDLK_x: 
+                            keys.xHeld = false; 
+                            break;
+                        case SDLK_y: 
+                            keys.yHeld = false; 
+                            break;
+                        case SDLK_z: 
+                            keys.zHeld = false; 
+                            break;
+
+                        case SDLK_UP:
+                            keys.upHeld = false; 
+                            break;
+                        case SDLK_DOWN:
+                            keys.downHeld = false; 
+                            break;
+                        case SDLK_LEFT:
+                            keys.leftHeld = false; 
+                            break;
+                        case SDLK_RIGHT:
+                            keys.rightHeld = false; 
+                            break;
+
+                        default: 
+                            break;
+                } break;
                 case SDL_JOYBUTTONDOWN: {
                     int b = event.cbutton.button;
 				    printf(" the button number is %d\n", b);
