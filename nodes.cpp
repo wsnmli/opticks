@@ -111,22 +111,28 @@ class Graph { public:
 
 class Raycaster { public:
     //  model points
-    V2 m1, m2, m3;
+    const V2 m1{14,0}, m2{-7, 10}, m3{-7, -10};
     V2 c;   // centre of traingle
     
     V2 p1, p2, p3;
-    double angleX = 0;
+    double x = 0;
 
-    Raycaster(V2 c) :c(c) {
-        m1 = {14, 0};
-        m2 = {-7, 10};
-        m3 = {-7, -10};
-    }
+    Raycaster(V2 c) :c(c) {}
 
     void draw() {
-        p1 = c + m1;
-        p2 = c + m2;
-        p3 = c + m3;
+        //  rotate the points
+        p1.x = (m1.x*cos(x)) - (m1.y*sin(x));
+        p2.x = (m2.x*cos(x)) - (m2.y*sin(x));
+        p3.x = (m3.x*cos(x)) - (m3.y*sin(x));
+
+        p1.y = (m1.x*sin(x)) + (m1.y*cos(x));
+        p2.y = (m2.x*sin(x)) + (m2.y*cos(x));
+        p3.y = (m3.x*sin(x)) + (m3.y*cos(x));
+        
+        //  then translate the points
+        p1 += c;
+        p2 += c;
+        p3 += c;
 
         fw.set_draw_color(0,0,255);
         fw.draw_line(p1,p2);
@@ -139,6 +145,11 @@ class Raycaster { public:
         if (keyboard.dHeld) c += {10, 0};
         if (keyboard.wHeld) c -= {0, 10};
         if (keyboard.sHeld) c += {0, 10};
+
+        if (keyboard.leftHeld) x -= 0.07;
+        if (keyboard.rightHeld) x += 0.07;
+        if (x < 0) x += 2*M_PI;
+        if (x >= 2*M_PI) x -= 2*M_PI;
     }
 };
 
