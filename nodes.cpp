@@ -9,9 +9,13 @@ class Edge { public:
     Edge(int n1, int n2, int w) :n1(n1), n2(n2), w(w) {}
 };
 
-class Graph { public:
-    vector<V2> nodes;
+template <typename T>
+class Graph { public: 
+    vector<T> nodes;
     vector<Edge> edges;
+};
+
+class planerGraph : Graph<V2> { public:
 
     void addRandomNodes() {
         for (int i=0; i<100; i++) {
@@ -154,7 +158,7 @@ class Raycaster { public:
 };
 
 int main() {
-    Graph graph;
+    planerGraph graph;
     graph.addSquare({W_WIDTH/2, W_HEIGHT/2}, 100);
     graph.addSquare({W_WIDTH/2-80, W_HEIGHT/2-200}, 50);
 
