@@ -15,7 +15,7 @@ class Graph { public:
     vector<Edge> edges;
 };
 
-class planerGraph : Graph<V2> { public:
+class planerGraph : public Graph<V2> { public:
 
     void addRandomNodes() {
         for (int i=0; i<100; i++) {
@@ -144,6 +144,43 @@ class Raycaster { public:
         fw.draw_line(p3,p1);
     }
 
+    void castRays(const planerGraph& g) {
+        // draw intital ray
+        V2 start = c;
+        int dx = 1200*cos(x);
+        int dy = 1200*sin(x);
+
+        V2 end = start + V2(dx, dy);
+
+        fw.set_draw_color(255,255,255);
+        fw.draw_line(start, end);
+
+        //  equation of the raycaster line y = mx + c
+        float m = dy/float(dx);
+        //  rearrange to solve for c
+        float c = start.y - (m*start.x);
+        //  cout << "y = " << m << " x + " << c << endl << flush;
+
+        int index = -1;
+        for (int i=0; i<g.edges.size(); i++) {
+            //  find the equation of the line for each edge
+            const V2 e1 = g.edges[i].n1;
+            const V2 e2 = g.edges[i].n2;
+            
+            int dy1 = e2.y - e1.y;
+            int dx1 = e2.x - e1.x;
+            float m1 = dy1 / float(dx1);
+            float c1 = e1.y - (m*e1.x);
+
+
+            //  if (m1 == m) continue;   //  if gradient is the same they are parralel and don't intersect
+            {  // find the point of intersection
+                float x, y;
+                x = (c1 - c) / (m1 - m); 
+            }
+        }
+    }
+
     void update(Keyboard& keyboard) {
         if (keyboard.aHeld) c -= {10, 0};
         if (keyboard.dHeld) c += {10, 0};
@@ -171,9 +208,11 @@ int main() {
         //cout << graph.angleOfEdge(0) << "\n" << flush;
         graph.update(fw.mouse);
         graph.draw();
-
-        raycaster.draw();
+        
         raycaster.update(fw.keys);
+        raycaster.draw();
+        
+        raycaster.castRays(graph);
         fw.render();
     }
 }

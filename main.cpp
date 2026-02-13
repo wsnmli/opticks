@@ -156,28 +156,27 @@ class Raycaster { public:
         fw.draw_line(start, end);
 
         //  equation of the raycaster line y = mx + c
-        float m = dy/float(dx);
-        //  rearrange to solve for c
-        float c = start.y - (m*start.x);
+        float m, c;
+        eqOfLine(m, c, start, end);
         //  cout << "y = " << m << " x + " << c << endl << flush;
 
+        //  go through every edge in the graph
+        //  check if the ray intersects with the edge
+        //  find the index of the closest of edge
         int index = -1;
         for (int i=0; i<g.edges.size(); i++) {
             //  find the equation of the line for each edge
-            const V2 e1 = g.edges[i].n1;
-            const V2 e2 = g.edges[i].n2;
-            
-            int dy1 = e2.y - e1.y;
-            int dx1 = e2.x - e1.x;
-            float m1 = dy1 / float(dx1);
-            float c1 = e1.y - (m*e1.x);
+            const V2 e1 = g.nodes[g.edges[i].n1]; 
+            const V2 e2 = g.nodes[g.edges[i].n2];
+            float m1, c1;
+            eqOfLine(m1, c1, e1, e2);
+            cout << "y = " << m1 << " x + " << c1 << endl << flush;
 
-
-            //  if (m1 == m) continue;   //  if gradient is the same they are parralel and don't intersect
-            {  // find the point of intersection
-                float x, y;
-                x = (c1 - c) / (m1 - m); 
-            }
+            V2 p1;  // point of intersection
+            if (m == m1) continue;
+            p1 = pointOfIntersection(m, c, m1, c1);
+            fw.set_draw_color(255,255,255);
+            fw.draw_circle(p1, 10);// cout << p1 << "\n" <<flush;
         }
     }
 
