@@ -172,7 +172,7 @@ class Raycaster { public:
             eqOfline2(l2, m2, n2, e1, e2);
 
             V2 p1;  // the point of intersection
-            if (fabs((m1*l2) - (m2-l1)) < 0.00001) continue;
+            if (fabs((m1*l2) - (m2*l1)) < 0.00001) continue;
             p1 = pointOfIntersection2(l1,m1,n1,l2,m2,n2);
             fw.set_draw_color(0,0,255);
             fw.draw_circle(p1, 10);
