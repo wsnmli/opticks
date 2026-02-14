@@ -171,11 +171,20 @@ class Raycaster { public:
             double l2, m2, n2;
             eqOfline2(l2, m2, n2, e1, e2);
 
-            V2 p1;  // the point of intersection
+            V2 p;  // the point of intersection
+            
+            //  check to see if the lines are parallel
             if (fabs((m1*l2) - (m2*l1)) < 0.00001) continue;
-            p1 = pointOfIntersection2(l1,m1,n1,l2,m2,n2);
+            p = pointOfIntersection2(l1,m1,n1,l2,m2,n2);
+            
+            //  check to see if the point intersects the edge
+            if (p.x < min(e1.x, e2.x)) continue;
+            if (p.x > max(e1.x, e2.x)) continue;
+            if (p.y < min(e1.y, e2.y)) continue;
+            if (p.y > max(e1.y, e2.y)) continue;
+
             fw.set_draw_color(0,0,255);
-            fw.draw_circle(p1, 10);
+            fw.draw_circle(p, 10);
         }
     }
 
