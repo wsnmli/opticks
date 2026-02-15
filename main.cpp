@@ -15,7 +15,7 @@ class Graph { public:
     vector<Edge> edges;
 };
 
-class planerGraph : public Graph<V2> { public:
+class PlanarGraph : public Graph<V2> { public:
 
     void addRandomNodes() {
         for (int i=0; i<100; i++) {
@@ -144,7 +144,7 @@ class Raycaster { public:
         fw.draw_line(p3,p1);
     }
 
-    void castRays(const planerGraph& g) {
+    void castRays(const PlanarGraph& g) {
         // draw intital ray
         V2 start = ce;
         int dx = 1200*cos(x);
@@ -219,7 +219,7 @@ class Raycaster { public:
 //  space apps challenge
 
 int main() {
-    planerGraph graph;
+    PlanarGraph graph;
     graph.addSquare({W_WIDTH/2, W_HEIGHT/2}, 100);
     graph.addSquare({W_WIDTH/2-80, W_HEIGHT/2-200}, 50);
 
