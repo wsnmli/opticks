@@ -35,10 +35,10 @@ class planerGraph : public Graph<V2> { public:
         if (p1.x == p2.x) return M_PI/2;
         if (p1.y == p2.y) return 0;
 
-        if (p2.x < p1.x & p2.y < p1.y) swap(p1, p2);
-        else if (p2.x > p1.x & p2.y < p1.y) swap(p1, p2);
+        if (p2.x < p1.x && p2.y < p1.y) swap(p1, p2);
+        else if (p2.x > p1.x && p2.y < p1.y) swap(p1, p2);
 
-        if (p2.x > p1.x & p2.y > p1.y) return atan((p2.y-p1.y)/double(p2.x-p1.x));
+        if (p2.x > p1.x && p2.y > p1.y) return atan((p2.y-p1.y)/double(p2.x-p1.x));
         else return (M_PI /2) - atan((p2.x-p1.x) / double(p2.y-p1.y));
     }
 
