@@ -76,7 +76,7 @@ class PlanarGraph : public Graph<V2> { public:
         } edges.push_back(Edge(numberOfNodes, numberOfNodes+3, 1));
     }
 
-    void update(Mouse& mouse) {
+    void update(const Mouse& mouse) {
         static int nSelectedNode = -1;
         if (mouse.leftPressed) {
             V2 mousePos = fw.mouse.pos;
@@ -92,7 +92,7 @@ class PlanarGraph : public Graph<V2> { public:
             nodes[nSelectedNode] = mouse.pos;
     }
 
-    void draw() {   //  draw the graph
+    void draw() const {   //  draw the graph
         //  draw edges
         for (int i=0; i<edges.size(); i++) {
             const Edge edge = edges[i];
@@ -144,7 +144,7 @@ class Raycaster { public:
         fw.draw_line(p3,p1);
     }
 
-    void castRays(const PlanarGraph& g) {
+    void castRays(const PlanarGraph& g) const {
         // draw intital ray
         V2 start = ce;
         int dx = 1200*cos(x);
@@ -204,7 +204,7 @@ class Raycaster { public:
              
     }
 
-    void update(Keyboard& keyboard) {
+    void update(const Keyboard& keyboard) {
         if (keyboard.aHeld) ce -= {10, 0};
         if (keyboard.dHeld) ce += {10, 0};
         if (keyboard.wHeld) ce -= {0, 10};
