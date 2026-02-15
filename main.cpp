@@ -92,7 +92,7 @@ class planerGraph : public Graph<V2> { public:
             nodes[nSelectedNode] = mouse.pos;
     }
 
-    void draw() {
+    void draw() {   //  draw the graph
         //  draw edges
         for (int i=0; i<edges.size(); i++) {
             const Edge edge = edges[i];
@@ -152,9 +152,6 @@ class Raycaster { public:
 
         V2 end = start + V2(dx, dy);
 
-        fw.set_draw_color(255,255,255);
-        fw.draw_line(start, end);
-
 
         //  find the equation of the raycaster line in the form: ly + mx + n = 0
         double l1, m1, n1;
@@ -163,7 +160,9 @@ class Raycaster { public:
         //  check if the ray intersects with the edge
         //  find the index of the closest of edge
 
-        int index = -1;
+        int edgeIndex = -1;
+        int closestDist2 = 1e9;
+        V2 cloestP;
         for (int i=0; i<g.edges.size(); i++) {
             //  find the equation of the line for each edge
             const V2 e1 = g.nodes[g.edges[i].n1]; 
@@ -187,9 +186,22 @@ class Raycaster { public:
             V2 toPoint = { p.x - ce.x, p.y - ce.y };
                 if (dir.x * toPoint.x + dir.y * toPoint.y < 0)
                     continue;  // point is behind the ray
-            fw.set_draw_color(0,0,255);
-            fw.draw_circle(p, 10);
+
+            //  if the code has gotten this far then the ray intersects an edge
+            int dist2 = distance_squared(ce, p);
+            if (dist2 < closestDist2) {
+                closestDist2 = dist2;
+                cloestP = p;
+                edgeIndex = i;
+            }
+            
         }
+        fw.set_draw_color(255,255,255);
+        if (edgeIndex == -1) // no edge was hit
+            fw.draw_line(start, end);
+        else
+            fw.draw_line(start, cloestP);
+             
     }
 
     void update(Keyboard& keyboard) {
