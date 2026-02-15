@@ -121,7 +121,7 @@ class Raycaster { public:
     V2 p1, p2, p3;
     double x = 0;
 
-    Raycaster(V2 c) :ce(c) {}
+    Raycaster(const V2& c) :ce(c) {}
 
     void draw() { // draw the triangle that the rays emmit from
         //  rotate the points
@@ -183,6 +183,10 @@ class Raycaster { public:
             if (p.y < min(e1.y, e2.y)) continue;
             if (p.y > max(e1.y, e2.y)) continue;
 
+            V2f dir = {cosf(x), sinf(x)}; // the rays direction
+            V2 toPoint = { p.x - ce.x, p.y - ce.y };
+                if (dir.x * toPoint.x + dir.y * toPoint.y < 0)
+                    continue;  // point is behind the ray
             fw.set_draw_color(0,0,255);
             fw.draw_circle(p, 10);
         }
