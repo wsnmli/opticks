@@ -113,6 +113,82 @@ class PlanarGraph : public Graph<V2> { public:
 
 };
 
+void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
+    int scale = sqrtf32((W_WIDTH*W_WIDTH) + (W_HEIGHT*W_HEIGHT));
+    int dx, dy;
+    V2 end;
+    
+    for (int i=0; i<n; i++) {
+        dx = scale*cos(x);
+        dy = scale*sin(x);
+        end = start + V2(dx, dy);
+        //  find the equation of the raycaster line in the form: ly + mx + n = 0
+        double l1, m1, n1;
+        eqOfline2(l1, m1, n1, start, end);
+        
+        //  go through every edge in the graph
+        //  check if the ray intersects with the edge
+        //  find the index of the closest of edge
+
+        int edgeIndex = -1;
+        int closestDist2 = 1e9;
+        V2 closestP;
+        
+        for (int i=0; i<g.edges.size(); i++) {
+            //  find the equation of the line for each edge
+            const V2 e1 = g.nodes[g.edges[i].n1]; 
+            const V2 e2 = g.nodes[g.edges[i].n2];
+            double l2, m2, n2;
+            eqOfline2(l2, m2, n2, e1, e2);
+
+            V2 p;   //  the point of intersection
+            if (fabs((m1*l2) - (m2*l1)) < 0.00001) continue;
+            p = pointOfIntersection2(l1,m1,n1,l2,m2,n2);
+
+            //  check to see if the point intersects the edge
+            if (p.x < min(e1.x, e2.x)) continue;
+            if (p.x > max(e1.x, e2.x)) continue;
+            if (p.y < min(e1.y, e2.y)) continue;
+            if (p.y > max(e1.y, e2.y)) continue;
+
+            V2f dir = {cosf(x), sinf(x)}; // the rays direction
+            V2 toPoint = { p.x - start.x, p.y - start.y };
+                if (dir.x * toPoint.x + dir.y * toPoint.y < 0)
+                    continue;  // point is behind the ray
+            
+            //  if the code has gotten this far then the ray intersects an edge
+            int dist2 = distance_squared(start, p);
+            if (dist2 < closestDist2) {
+                closestDist2 = dist2;
+                closestP = p;
+                edgeIndex = i;
+                end = closestP;
+            }
+        }
+        
+        if (edgeIndex != -1) {
+            //  get the edge vector
+            V2 e1 = g.nodes[g.edges[edgeIndex].n1];
+            V2 e2 = g.nodes[g.edges[edgeIndex].n2];
+            V2 edgeVec = { e2.x - e1.x, e2.y - e1.y };
+        }
+
+
+
+        if (end.x < 0 || end.x > W_WIDTH 
+         || end.y < 0 || end.y > W_HEIGHT) { // ray falls of edge of the screen
+            fw.set_draw_color(255,255,255);
+            fw.draw_line(start, end);
+            break;
+        } else {
+            end = closestP;
+            fw.set_draw_color(255,255,255);
+            fw.draw_line(start, end);
+            start = end;
+        }
+    }
+}
+
 class Raycaster { public:
     //  model points
     const V2 m1{14,0}, m2{-7, 10}, m3{-7, -10};
@@ -145,63 +221,7 @@ class Raycaster { public:
     }
 
     void castRays(const PlanarGraph& g) const {
-        // draw intital ray
-        V2 start = ce;
-        int dx = 1200*cos(x);
-        int dy = 1200*sin(x);
-
-        V2 end = start + V2(dx, dy);
-
-
-        //  find the equation of the raycaster line in the form: ly + mx + n = 0
-        double l1, m1, n1;
-        eqOfline2(l1, m1, n1, start, end);
-        //  go through every edge in the graph
-        //  check if the ray intersects with the edge
-        //  find the index of the closest of edge
-
-        int edgeIndex = -1;
-        int closestDist2 = 1e9;
-        V2 cloestP;
-        for (int i=0; i<g.edges.size(); i++) {
-            //  find the equation of the line for each edge
-            const V2 e1 = g.nodes[g.edges[i].n1]; 
-            const V2 e2 = g.nodes[g.edges[i].n2];
-            double l2, m2, n2;
-            eqOfline2(l2, m2, n2, e1, e2);
-
-            V2 p;  // the point of intersection
-            
-            //  check to see if the lines are parallel
-            if (fabs((m1*l2) - (m2*l1)) < 0.00001) continue;
-            p = pointOfIntersection2(l1,m1,n1,l2,m2,n2);
-            
-            //  check to see if the point intersects the edge
-            if (p.x < min(e1.x, e2.x)) continue;
-            if (p.x > max(e1.x, e2.x)) continue;
-            if (p.y < min(e1.y, e2.y)) continue;
-            if (p.y > max(e1.y, e2.y)) continue;
-
-            V2f dir = {cosf(x), sinf(x)}; // the rays direction
-            V2 toPoint = { p.x - ce.x, p.y - ce.y };
-                if (dir.x * toPoint.x + dir.y * toPoint.y < 0)
-                    continue;  // point is behind the ray
-
-            //  if the code has gotten this far then the ray intersects an edge
-            int dist2 = distance_squared(ce, p);
-            if (dist2 < closestDist2) {
-                closestDist2 = dist2;
-                cloestP = p;
-                edgeIndex = i;
-            }
-            
-        }
-        fw.set_draw_color(255,255,255);
-        if (edgeIndex == -1) // no edge was hit
-            fw.draw_line(start, end);
-        else
-            fw.draw_line(start, cloestP);
-             
+        castRayIterative(g,ce,x,2);
     }
 
     void update(const Keyboard& keyboard) {
