@@ -23,7 +23,7 @@ class PlanarGraph : public Graph<V2> { public:
         }
     }
 
-    double angleOfEdge(int n) {
+    double angleOfEdge(int n) const {
         //  find the angle of the nth edge with respect to the x-axis
 
         //  find the edge
@@ -157,6 +157,7 @@ void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
             //  if the code has gotten this far then the ray intersects an edge
             int dist2 = distance_squared(start, p);
             if (dist2 < closestDist2) {
+                if (dist2 < 1) continue;    //  if distance = 0 then its on the line
                 closestDist2 = dist2;
                 closestP = p;
                 edgeIndex = i;
@@ -165,17 +166,14 @@ void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
         }
         
         if (edgeIndex != -1) {
-            //  get the edge vector
-            V2 e1 = g.nodes[g.edges[edgeIndex].n1];
-            V2 e2 = g.nodes[g.edges[edgeIndex].n2];
-            V2 edgeVec = { e2.x - e1.x, e2.y - e1.y };
-            
-            //  equation of line for edge
-            double l2, m2, n2;
-            eqOfline2(l2, m2, n2, e1, e2);
+            double edgeAngle = g.angleOfEdge(edgeIndex);
 
-            //  angle between ray and edge
-            double a = angleBetweenLines(l1, m1, l2, m2);
+            //  reflect ray across edge line
+            x = 2 * edgeAngle - x;
+
+            //  normalise
+            if (x < 0) x += 2*M_PI;
+            if (x >= 2*M_PI) x -= 2*M_PI;
         }
 
 
@@ -226,7 +224,7 @@ class Raycaster { public:
     }
 
     void castRays(const PlanarGraph& g) const {
-        castRayIterative(g,ce,x,1);
+        castRayIterative(g,ce,x,100);
     }
 
     void update(const Keyboard& keyboard) {
