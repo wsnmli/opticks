@@ -24,6 +24,10 @@ void eqOfline2(double& l, double& m, double& n, const v& p1, const v& p2) {
     n = -(m * p1.x + l * p1.y);
 }
 
+double angleBetweenLines(double l1, double m1, double l2, double m2) {
+    return atan2( (l1*m2 - l2*m1), (l1*l2 + m1*m2) );
+}
+
 Vector2i pointOfIntersection(float m1, float c1, float m2, float c2) {
     //  given the equations of two lines find the point of intersection
 
