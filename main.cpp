@@ -32,14 +32,12 @@ class PlanarGraph : public Graph<V2> { public:
         V2 p1 = nodes[edge.n1];
         V2 p2 = nodes[edge.n2];
 
-        if (p1.x == p2.x) return M_PI/2;
-        if (p1.y == p2.y) return 0;
+        double a = atan2(p2.y - p1.y, p2.x - p1.x);
 
-        if (p2.x < p1.x && p2.y < p1.y) swap(p1, p2);
-        else if (p2.x > p1.x && p2.y < p1.y) swap(p1, p2);
+        //  because edges are undirected map to [0, pi)
+        if (a < 0) a += M_PI;
 
-        if (p2.x > p1.x && p2.y > p1.y) return atan((p2.y-p1.y)/double(p2.x-p1.x));
-        else return (M_PI /2) - atan((p2.x-p1.x) / double(p2.y-p1.y));
+        return a;
     }
 
     void addEdge(V2 n1, V2 n2, int w) {
