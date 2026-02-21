@@ -171,6 +171,13 @@ void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
             V2 e1 = g.nodes[g.edges[edgeIndex].n1];
             V2 e2 = g.nodes[g.edges[edgeIndex].n2];
             V2 edgeVec = { e2.x - e1.x, e2.y - e1.y };
+            
+            //  equation of line for edge
+            double l2, m2, n2;
+            eqOfline2(l2, m2, n2, e1, e2);
+
+            //  angle between ray and edge
+            double a = angleBetweenLines(l1, m1, l2, m2);
         }
 
 
@@ -221,7 +228,7 @@ class Raycaster { public:
     }
 
     void castRays(const PlanarGraph& g) const {
-        castRayIterative(g,ce,x,2);
+        castRayIterative(g,ce,x,1);
     }
 
     void update(const Keyboard& keyboard) {
