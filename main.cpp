@@ -45,7 +45,7 @@ class PlanarGraph : public Graph<V2> { public:
         nodes.push_back(n1);
         nodes.push_back(n2);
 
-        edges.push_back(Edge(numberOfNodes, numberOfNodes+1, 1));
+        edges.push_back(Edge(numberOfNodes, numberOfNodes+1, w));
     }
 
     void addSquare(V2 p, int s) {
