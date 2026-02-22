@@ -178,8 +178,7 @@ void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
 
 
 
-        if (end.x < 0 || end.x > W_WIDTH 
-         || end.y < 0 || end.y > W_HEIGHT) { // ray falls of edge of the screen
+        if (outsideScreen(end)) { // ray falls of edge of the screen
             fw.set_draw_color(255,255,255);
             fw.draw_line(start, end);
             break;
