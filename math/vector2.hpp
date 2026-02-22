@@ -124,6 +124,7 @@ std::ostream& operator<<(std::ostream& os, const Vector2<T>& v) {
 
 //  typedefs
 
-using Vector2i = Vector2<int>;
+using V2 = Vector2<int>;
 using Vector2i = Vector2<int>;
 using Vector2f = Vector2<float>;
+using V2f = Vector2<float>;
