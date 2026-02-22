@@ -1,5 +1,4 @@
-#include "vector2f.hpp"
-#include "vector2i.hpp"
+#include "vector2.hpp"
 #include "vector3f.hpp"
 
 #include "matrix_t.hpp"

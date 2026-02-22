@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vector2i.hpp"
+#include "vector2.hpp"
 #include "matrix_t.hpp"
 #include "vector_functions.hpp"
 #include "../sdl_fw.hpp"

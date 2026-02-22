@@ -1,5 +1,5 @@
 #pragma once
-#include "vector2i.hpp"
+#include "vector2.hpp"
 
 template <typename v>
 void eqOfLine(float& m, float& c, const v& p1, const v& p2) {

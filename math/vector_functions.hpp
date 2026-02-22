@@ -5,8 +5,7 @@
 using namespace std;
 
 
-#include "vector2f.hpp"
-#include "vector2i.hpp"
+#include "vector2.hpp"
 
 float degrestoradians(float degree) {
     return (degree * M_PI * 2) / 360;
