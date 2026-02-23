@@ -151,7 +151,7 @@ void castRayIterative(const PlanarGraph& g, V2f start, double x, int n) {
 
             V2f dir = {cosf(x), sinf(x)}; // the rays direction
             V2f toPoint = { p.x - start.x, p.y - start.y };
-                if (dir.x * toPoint.x + dir.y * toPoint.y < 0)
+                if (dot(dir, toPoint) < 0)
                     continue;  // point is behind the ray
             
             //  if the code has gotten this far then the ray intersects an edge
