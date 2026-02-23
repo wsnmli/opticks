@@ -43,14 +43,14 @@ Vector2i pointOfIntersection(float m1, float c1, float m2, float c2) {
     return Vector2i(x+0.5, y+0.5);
 }
 
-Vector2i pointOfIntersection2(
+Vector2f pointOfIntersection2(
     double l1, double m1, double n1,
     double l2, double m2, double n2)
 {
     // using crammers rule
     double D = (m1*l2) - (m2*l1);
     
-    Vector2i result;
+    Vector2f result;
     result.x = (l1 * n2 - l2 * n1) / D;
     result.y = (m2 * n1 - m1 * n2) / D;
 

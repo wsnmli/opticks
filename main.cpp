@@ -111,15 +111,15 @@ class PlanarGraph : public Graph<V2> { public:
 
 };
 
-void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
+void castRayIterative(const PlanarGraph& g, V2f start, double x, int n) {
     int scale = sqrtf32((W_WIDTH*W_WIDTH) + (W_HEIGHT*W_HEIGHT));
     int dx, dy;
-    V2 end;
+    V2f end;
     
     for (int i=0; i<n; i++) {
         dx = scale*cos(x);
         dy = scale*sin(x);
-        end = start + V2(dx, dy);
+        end = start + V2f(dx, dy);
         //  find the equation of the raycaster line in the form: ly + mx + n = 0
         double l1, m1, n1;
         eqOfline2(l1, m1, n1, start, end);
@@ -130,7 +130,7 @@ void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
 
         int edgeIndex = -1;
         int closestDist2 = 1e9;
-        V2 closestP;
+        V2f closestP;
         
         for (int i=0; i<g.edges.size(); i++) {
             //  find the equation of the line for each edge
@@ -139,7 +139,7 @@ void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
             double l2, m2, n2;
             eqOfline2(l2, m2, n2, e1, e2);
 
-            V2 p;   //  the point of intersection
+            V2f p;   //  the point of intersection
             if (fabs((m1*l2) - (m2*l1)) < 0.00001) continue;
             p = pointOfIntersection2(l1,m1,n1,l2,m2,n2);
 
@@ -150,7 +150,7 @@ void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
             if (p.y > max(e1.y, e2.y)) continue;
 
             V2f dir = {cosf(x), sinf(x)}; // the rays direction
-            V2 toPoint = { p.x - start.x, p.y - start.y };
+            V2f toPoint = { p.x - start.x, p.y - start.y };
                 if (dir.x * toPoint.x + dir.y * toPoint.y < 0)
                     continue;  // point is behind the ray
             
@@ -176,8 +176,6 @@ void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
             if (x >= 2*M_PI) x -= 2*M_PI;
         }
 
-
-
         if (outsideScreen(end)) { // ray falls of edge of the screen
             fw.set_draw_color(255,255,255);
             fw.draw_line(start, end);
@@ -193,13 +191,13 @@ void castRayIterative(const PlanarGraph& g, V2 start, double x, int n) {
 
 class Raycaster { public:
     //  model points
-    const V2 m1{14,0}, m2{-7, 10}, m3{-7, -10};
-    V2 ce;   // centre of traingle
+    const V2f m1{14,0}, m2{-7, 10}, m3{-7, -10};
+    V2f ce;   // centre of traingle
     
-    V2 p1, p2, p3;
+    V2f p1, p2, p3;
     double x = 0;
 
-    Raycaster(const V2& c) :ce(c) {}
+    Raycaster(const V2f& c) :ce(c) {}
 
     void draw() { // draw the triangle that the rays emmit from
         //  rotate the points

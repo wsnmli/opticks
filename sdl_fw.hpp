@@ -521,7 +521,7 @@ public:
 	}
 };
 
-bool outsideScreen(const V2& p) {
+bool outsideScreen(const V2f& p) {
     return p.x < 0 || p.x > W_WIDTH
         || p.y < 0 || p.y > W_HEIGHT;
 }
