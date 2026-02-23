@@ -236,7 +236,6 @@ class Raycaster { public:
         if (x >= 2*M_PI) x -= 2*M_PI;
     }
 };
-//  space apps challenge
 
 int main() {
     PlanarGraph graph;
