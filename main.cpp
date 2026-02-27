@@ -111,6 +111,41 @@ class PlanarGraph : public Graph<V2> { public:
 
 };
 
+bool rayCircleIntersection(const V2f& start, const V2f dir, 
+                           const V2& centre, float radius2, float& distance) {
+    //  the vector from the ray start to circle centre
+    V2f oc = { centre.x - start.x, centre.y - start.y};
+
+    // project oc onyo ray direction
+    float t = dot(oc, dir);
+
+    //  the closeset point on ray to circle centre
+    V2f closest = start + dir * t;
+    
+    // distance from circle centre to closest point
+    float d2 = distance_squared(closest, centre);
+    
+    if (d2 > radius2)   // no intersection
+        return false;
+
+    float thc = sqrtf(radius2 - d2);
+
+    // the two possible intersections
+    float t0 = t - thc;
+    float t1 = t + thc;
+
+    if (t0 > 0) {
+        distance = t0;
+        return true;
+    }
+    if (t1 > 0) {
+        distance = t1;
+        return true;
+    }
+
+    return false; // both behind ray
+}
+
 void castRayIterative(const PlanarGraph& g, V2f start, double x, int n) {
     int scale = sqrtf32((W_WIDTH*W_WIDTH) + (W_HEIGHT*W_HEIGHT));
     int dx, dy;
@@ -157,7 +192,7 @@ void castRayIterative(const PlanarGraph& g, V2f start, double x, int n) {
             //  if the code has gotten this far then the ray intersects an edge
             int dist2 = distance_squared(start, p);
             if (dist2 < closestDist2) {
-                if (dist2 < 1) continue;    //  if distance = 0 then its on the line
+                if (dist2 < 0.1) continue;    //  if distance = 0 then its on the line
                 closestDist2 = dist2;
                 closestP = p;
                 edgeIndex = i;
@@ -195,7 +230,7 @@ class Raycaster { public:
     V2f ce;   // centre of traingle
     
     V2f p1, p2, p3;
-    double x = 0;
+    double x = M_PI / 4;
 
     Raycaster(const V2f& c) :ce(c) {}
 
