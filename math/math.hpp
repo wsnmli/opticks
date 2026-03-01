@@ -6,8 +6,6 @@
 #include "complex.hpp"
 #include "math_constants.hpp"
 
-#include "labeled_graph.hpp"
-
 #include "vector_functions.hpp"
 
 #include "linear_algebra.hpp"
