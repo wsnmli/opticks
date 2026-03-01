@@ -94,13 +94,13 @@ constexpr bool operator!=(const Vector2<T>& a, const Vector2<T>& b) {
 
 // utility functions
 
-template<typename T>
-constexpr T dot(const Vector2<T>& a, const Vector2<T>& b) {
+template<typename T1, typename T2>
+auto dot(const Vector2<T1>& a, const Vector2<T2>& b) {
     return a.x * b.x + a.y * b.y;
 }
 
-template<typename T>
-constexpr T cross(const Vector2<T>& a, const Vector2<T>& b) {
+template<typename T1, typename T2>
+auto cross(const Vector2<T1>& a, const Vector2<T2>& b) {
     return a.x * b.y - a.y * b.x;
 }
 
