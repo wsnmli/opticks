@@ -104,14 +104,14 @@ constexpr T cross(const Vector2<T>& a, const Vector2<T>& b) {
     return a.x * b.y - a.y * b.x;
 }
 
-template<typename T>
-auto distance_squared(const Vector2<T>& a, const Vector2<T>& b) {
-    return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
+template<typename T1, typename T2>
+auto distance_squared(const Vector2<T1>& a, const Vector2<T2>& b) {
+    return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
 }
 
-template<typename T>
-auto distance(const Vector2<T>& a, const Vector2<T>& b) {
-    return sqrt(distance_squared(a, b));
+template<typename T1, typename T2>
+auto distance(const Vector2<T1>& a, const Vector2<T2>& b) {
+    return std::sqrt(distance_squared(a, b));
 }
 
 // stream output
