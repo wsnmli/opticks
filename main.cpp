@@ -40,6 +40,27 @@ class PlanarGraph : public Graph<V2> { public:
         return a;
     }
 
+    double averageEdgeAngleAtNode(int n) {
+        int edgeIndex1 = -1;
+        int edgeIndex2 = -1;
+
+        //  find the edges adjacent to the node
+        for (int i=0; i<edges.size(); i++) {
+            if (edges[i].n1 == n || edges[i].n2 == n) {
+                if (edgeIndex1 == -1) {
+                    edgeIndex1 = i;
+                } else {
+                    edgeIndex2 = i;
+                    break;
+                }
+            }
+        }
+        double a1 = angleOfEdge(edgeIndex1);
+        double a2 = angleOfEdge(edgeIndex2);
+
+        return (a1 + a2) / 2.0;
+    }
+
     void addEdge(V2 n1, V2 n2, int w) {
         int numberOfNodes = nodes.size();
         nodes.push_back(n1);
