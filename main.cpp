@@ -4,8 +4,6 @@
 
 Framework fw("Reflecting a ray of a union of planar circuits");
 
-
-
 class PlanarGraph : public Graph<V2> { public:
 
     void addRandomNodes() {
