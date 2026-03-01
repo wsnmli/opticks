@@ -206,9 +206,8 @@ void castRayIterative(const PlanarGraph& g, V2f start, double x, int n) {
             //  reflect ray across edge line
             x = 2 * edgeAngle - x;
 
-            //  normalise
-            if (x < 0) x += 2*M_PI;
-            if (x >= 2*M_PI) x -= 2*M_PI;
+            //  normalise x
+            x = fmod(x + 2*M_PI, 2*M_PI);
         }
 
         if (outsideScreen(end)) { // ray falls of edge of the screen
@@ -267,8 +266,9 @@ class Raycaster { public:
 
         if (keyboard.leftHeld) x -= 0.07;
         if (keyboard.rightHeld) x += 0.07;
-        if (x < 0) x += 2*M_PI;
-        if (x >= 2*M_PI) x -= 2*M_PI;
+        
+        // normailse x
+        x = fmod(x + 2*M_PI, 2*M_PI);
     }
 };
 
