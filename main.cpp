@@ -206,7 +206,7 @@ void castRayIterative(const PlanarGraph& g, V2f start, double x, int n) {
             if (p.y > max(e1.y, e2.y)) continue;
 
             V2f dir = {cosf(x), sinf(x)}; // the rays direction
-            V2f toPoint = { p.x - start.x, p.y - start.y };
+            V2f toPoint = p - start;
                 if (dot(dir, toPoint) < 0)
                     continue;  // point is behind the ray
             
